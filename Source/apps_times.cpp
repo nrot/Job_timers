@@ -24,7 +24,7 @@ std::string  take_now_mon() {
 	ptm = gmtime(&rawtime);
 	std::string s_tm_year = std::to_string(ptm->tm_year);
 	std::string s_tm_mon = std::to_string(ptm->tm_mon + 1);
-	std::string s_tm_mday = std::to_string(ptm->tm_mday);
+	//std::string s_tm_mday = std::to_string(ptm->tm_mday);
 	//char s[20];
 	std::string s;
 	//strmcat(2, s, s_tm_year.c_str(), '_', s_tm_mon.c_str());
@@ -62,4 +62,9 @@ int sec_to_day(int n)
 }
 float sec_to_fhour(int n){
 	return (sec_to_mins(n) / 60);
+}
+
+std::string mstrftime(std::string templ, time_t tn){
+	char* buff;
+	strftime(buff, sizeof buff, templ.c_str(), gmtime(&tn));
 }

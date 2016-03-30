@@ -32,15 +32,15 @@ void work::start()
 		switch (status)
 		{
 		case work::WORK:
-			std::cout << "Work already start, u can use stop \n:";
+			std::cout << "Work already start, u can use stop (e) \n:";
 			return;
 		break;
 		case work::PAUSE:
-			std::cout << "Work on pause, u can use unpause \n:";
+			std::cout << "Work on pause, u can use unpause (u) \n:";
 			return;
 		break;
 		case work::COMMIT:
-			std::cout << "Work not start, u can use start \n:";
+			std::cout << "Work not start, u can use start (b) \n:";
 			return;
 		break;
 		}
@@ -54,7 +54,7 @@ bool work::stop()
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not start, u can use start \n:";
+		std::cout << "Work not start, u can use start (b) \n:";
 		return false;
 		break;
 	case work::WORK:
@@ -75,7 +75,7 @@ bool work::stop()
 		return true;
 		break;
 	case work::PAUSE:
-		std::cout << "Work on pause, u can use unpuase \n:";
+		std::cout << "Work on pause, u can use unpause (u) \n:";
 		return false;
 		break;
 	case work::COMMIT:
@@ -90,7 +90,7 @@ void work::pause()
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not start, u can use start \n:";
+		std::cout << "Work not start, u can use start (b) \n:";
 		return;
 		break;
 	case work::WORK:
@@ -102,7 +102,7 @@ void work::pause()
 		return;
 		break;
 	case work::PAUSE:
-		std::cout << "work already pause, u can use unpause \n:";
+		std::cout << "work already pause, u can use unpause (u) \n:";
 		return;
 		break;
 	case work::COMMIT:
@@ -117,11 +117,11 @@ void work::unpause()
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not starteds, u can use start\n:";
+		std::cout << "Work not starteds, u can use start (b)\n:";
 		return;
 		break;
 	case work::WORK:
-		std::cout << "Work not pause, u can use pause\n:";
+		std::cout << "Work not pause, u can use pause (p)\n:";
 		return;
 		break;
 	case work::PAUSE:
@@ -145,21 +145,21 @@ void work::commit(std::string str)
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not start, u can use start\n:";
+		std::cout << "Work not start, u can use start (b)\n:";
 		return;
 		break;
 	case work::WORK:
-		std::cout << "Work not stoped, u can use stop\n:";
+		std::cout << "Work not stoped, u can use stop (e)\n:";
 		return;
 		break;
 	case work::PAUSE:
-		std::cout << "Work on pause, u can use unpause and stop\n:";
+		std::cout << "Work on pause, u can use unpause (u) and stop (e)\n:";
 		return;
 		break;
 	case work::COMMIT:
 		//std::cout << "U write this commit:" << str < "\n:";
-		std::cout << "Commit write";
-		file << "\nWhat do: " << str << "\n" << "Work stoped: " << ctime(&end_work) << "\n" << SEPARATOR;
+		std::cout << "Commit write\n";
+		file << "\nWhat do: " << str << "\n" << "Work stoped: " << ctime(&end_work) << "" << SEPARATOR;
 		status = IDLE;
 		reopen();
 		return;

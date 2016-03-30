@@ -11,3 +11,4 @@ int hour_to_day(int n);
 int sec_to_hour(int n);
 float sec_to_fhour(int n);
 int sec_to_day(int n);
+std::string mstrftime(std::string templ, time_t tn);
