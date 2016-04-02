@@ -5,9 +5,12 @@
 #include "Source/Argv_Parser.h"
 #include "Source/apps_string.h"
 #include "Source/work.h"
-
+#include "Source/localizate.h"
 
 int main(int argc, char* argv[]) {
+
+	char* local = setlocale(LC_ALL, "");
+	localizate loc = localizate(local);
 
 	Argv_Parser args = Argv_Parser(argc, argv);
 	std::string name_file;

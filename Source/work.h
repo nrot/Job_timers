@@ -3,11 +3,12 @@
 #include <fstream>
 #include "Errors_codes.h"
 #include <string>
+#include "localizate.h"
 
 class work
 {
 public:
-	work(std::string name);
+	work(std::string name/*, localizate lc*/);
 	void start();
 	bool stop();
 	void pause();

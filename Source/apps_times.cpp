@@ -7,29 +7,16 @@ std::string  take_now_day() {
 	time_t rawtime;
 	struct tm * ptm;
 	time(&rawtime);
-	ptm = gmtime(&rawtime);
-	std::string s_tm_year = std::to_string(ptm->tm_year);
-	std::string s_tm_mon = std::to_string(ptm->tm_mon + 1);
-	std::string s_tm_mday = std::to_string(ptm->tm_mday);
-	std::string s;
-	//strmcat(4, s, s_tm_year.c_str(), '_', s_tm_mon.c_str(),'_', s_tm_mday.c_str());
-	s += s_tm_year + '_' + s_tm_mon + '_' + s_tm_mday;
-	return s;
+	//s += s_tm_year + '_' + s_tm_mon + '_' + s_tm_mday;
+	return mstrftime("%Y_%m_%d", rawtime);
 }
 
 std::string  take_now_mon() {
 	time_t rawtime;
 	struct tm * ptm;
 	time(&rawtime);
-	ptm = gmtime(&rawtime);
-	std::string s_tm_year = std::to_string(ptm->tm_year);
-	std::string s_tm_mon = std::to_string(ptm->tm_mon + 1);
-	//std::string s_tm_mday = std::to_string(ptm->tm_mday);
-	//char s[20];
-	std::string s;
-	//strmcat(2, s, s_tm_year.c_str(), '_', s_tm_mon.c_str());
-	s += s_tm_year + '_' + s_tm_mon;
-	return s;
+	//s += s_tm_year + '_' + s_tm_mon;
+	return mstrftime("%Y_%m", rawtime);
 }
 
 int sec_to_mins(int n)

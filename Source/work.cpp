@@ -4,8 +4,10 @@
 #include <time.h>
 #include "apps_times.h"
 #include <cmath>
+#include "localizate.h"
 
-work::work(std::string name) {
+work::work(std::string name/*, localizate lc*/){
+
 	file.open(name, std::fstream::app | std::fstream::out);
 	if (file.rdstate() && std::fstream::failbit != 0){
 		std::cout << "Failed to create or open file: "<< name;
