@@ -8,7 +8,7 @@
 class work
 {
 public:
-	work(std::string name/*, localizate lc*/);
+	work(std::string name, localizate* lc);
 	void start();
 	bool stop();
 	void pause();
@@ -17,6 +17,7 @@ public:
 	bool wait_commit();
 	bool close();
 	bool reopen();
+	bool is_error();
 private:
 	enum state
 	{
@@ -25,6 +26,7 @@ private:
 		PAUSE,
 		COMMIT
 	};
+	localizate* obj_loc;
 	state status = IDLE;
 	std::ofstream file;
 	time_t start_work, end_work,

@@ -6,17 +6,23 @@
 #include <cmath>
 #include "localizate.h"
 
-work::work(std::string name/*, localizate lc*/){
+work::work(std::string name, localizate* lc){
 
-	file.open(name, std::fstream::app | std::fstream::out);
-	if (file.rdstate() && std::fstream::failbit != 0){
-		std::cout << "Failed to create or open file: "<< name;
-		error = FILENOTOPEN;
+	if (lc->is_error()){
+		error = ERROR_LOCAL;
 	}
-	else
-	{
-		std::cout << "File open normal: " << name << "\n:";
-		name_file = name;
+	else {
+		obj_loc = lc;
+		file.open(name, std::fstream::app | std::fstream::out);
+		if (file.rdstate() && std::fstream::failbit != 0){
+			std::cout << obj_loc->find_loc("Failed to create or open file:")<< name;
+			error = FILENOTOPEN;
+		}
+		else
+		{
+			std::cout << obj_loc->find_loc("File open normal:") << name << "\n:";
+			name_file = name;
+		}
 	}
 }
 
@@ -25,8 +31,8 @@ void work::start()
 	if (status == IDLE) {
 		start_work = time(NULL);
 		status = WORK;
-		std::cout << "Work started: " << ctime(&start_work)<<"\n:";
-		file << SEPARATOR << "Work started: " << ctime(&start_work) << "\n";
+		std::cout << obj_loc->find_loc("Work started:") << ctime(&start_work)<<"\n:";
+		file << SEPARATOR << obj_loc->find_loc("Work started:") << ctime(&start_work) << "\n";
 		reopen();
 		return;
 	} 
@@ -34,15 +40,15 @@ void work::start()
 		switch (status)
 		{
 		case work::WORK:
-			std::cout << "Work already start, u can use stop (e) \n:";
+			std::cout << obj_loc->find_loc("Work already start, u can use stop (e)")<< "\n:";
 			return;
 		break;
 		case work::PAUSE:
-			std::cout << "Work on pause, u can use unpause (u) \n:";
+			std::cout << obj_loc->find_loc("Work on pause, u can use unpause (u)") << "\n:";
 			return;
 		break;
 		case work::COMMIT:
-			std::cout << "Work not start, u can use start (b) \n:";
+			std::cout << obj_loc->find_loc("Work not start, u can use start (b)") << "\n:";
 			return;
 		break;
 		}
@@ -56,7 +62,7 @@ bool work::stop()
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not start, u can use start (b) \n:";
+		std::cout << obj_loc->find_loc("Work not start, u can use start (b)")<< "\n:";
 		return false;
 		break;
 	case work::WORK:
@@ -64,24 +70,24 @@ bool work::stop()
 		tt = end_work - start_work - all_pause;
 		take_time = gmtime(&tt);
 		status = COMMIT;
-		std::cout << "Work stoped: " << ctime(&end_work) << "\n Time take:"<<ctime(&tt);
-		file << "Take time: ";
-		if (sec_to_day(tt) > 0) file << "days= " << sec_to_day(tt) << ";";
-		if (sec_to_fhour(tt) > 0) file << "hours= " << (floor(sec_to_fhour(tt))*10)/10 << ";";
-		if (sec_to_mins(tt) > 0) file << "mins= " << sec_to_mins(tt) << ";";
+		std::cout << obj_loc->find_loc("Work stoped:") << ctime(&end_work) << "\n"<< obj_loc->find_loc("Time take:")<<ctime(&tt);
+		file << obj_loc->find_loc("Take time:");
+		if (sec_to_day(tt) > 0) file << obj_loc->find_loc("days=") << sec_to_day(tt) << ";";
+		if (sec_to_fhour(tt) > 0) file << obj_loc->find_loc("hours=") << (floor(sec_to_fhour(tt))*10)/10 << ";";
+		if (sec_to_mins(tt) > 0) file << obj_loc->find_loc("mins=") << sec_to_mins(tt) << ";";
 		if (!reopen()) {
 			return false;
 		}
-		std::cout << "\nWrite commit:\n";
+		std::cout << "\n"<< obj_loc->find_loc("Write commit:")<< "\n";
 		//file << "Work stoped: " << ctime(&end_work) << "\n" << SEPARATOR;
 		return true;
 		break;
 	case work::PAUSE:
-		std::cout << "Work on pause, u can use unpause (u) \n:";
+		std::cout << obj_loc->find_loc("Work on pause, u can use unpause (u)") << "\n:";
 		return false;
 		break;
 	case work::COMMIT:
-		std::cout << "Please write commit without smth command on start string\n:";
+		std::cout << obj_loc->find_loc("Please write commit without smth command on start string:") << "\n";
 		return false;
 		break;
 	}
@@ -92,23 +98,23 @@ void work::pause()
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not start, u can use start (b) \n:";
+		std::cout << obj_loc->find_loc("Work not start, u can use start (b)") << "\n:";
 		return;
 		break;
 	case work::WORK:
 		pause_start = time(NULL);
 		status = PAUSE;
-		std::cout << "Work on puase: " << ctime(&pause_start) << "\n:";
-		file << "Work on puase: " << ctime(&pause_start) << "\n";
+		std::cout << obj_loc->find_loc("Work on pause:") << ctime(&pause_start) << "\n:";
+		file << obj_loc->find_loc("Work on pause:") << ctime(&pause_start) << "\n";
 		reopen();
 		return;
 		break;
 	case work::PAUSE:
-		std::cout << "work already pause, u can use unpause (u) \n:";
+		std::cout << obj_loc->find_loc("Work already pause, u can use unpause (u)") << "\n:";
 		return;
 		break;
 	case work::COMMIT:
-		std::cout << "Please write commit without smth command on start string\n:";
+		std::cout << obj_loc->find_loc("Please write commit without smth command on start string:") << "\n";
 		return;
 		break;
 	}
@@ -119,24 +125,24 @@ void work::unpause()
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not starteds, u can use start (b)\n:";
+		std::cout << obj_loc->find_loc("Work not start, u can use start (b)") << "\n:";
 		return;
 		break;
 	case work::WORK:
-		std::cout << "Work not pause, u can use pause (p)\n:";
+		std::cout << obj_loc->find_loc("Work not pause, u can use pause (p)") << "\n:";
 		return;
 		break;
 	case work::PAUSE:
 		pause_end = time(NULL);
 		all_pause += pause_end - pause_start;
 		status = WORK;
-		std::cout << "Work unpause on:" << ctime(&pause_end) << "\n:";
-		file << "Work unpause on:" << ctime(&pause_end) << "\n";
+		std::cout << obj_loc->find_loc("Work unpause on:") << ctime(&pause_end) << "\n:";
+		file << obj_loc->find_loc("Work unpause on:") << ctime(&pause_end) << "\n";
 		reopen();
 		return;
 		break;
 	case work::COMMIT:
-		std::cout << "Please write commit without smth command on start string\n:";
+		std::cout << obj_loc->find_loc("Please write commit without smth command on start string:") << "\n";
 		return;
 		break;
 	}
@@ -147,21 +153,21 @@ void work::commit(std::string str)
 	switch (status)
 	{
 	case work::IDLE:
-		std::cout << "Work not start, u can use start (b)\n:";
+		std::cout << obj_loc->find_loc("Work not start, u can use start (b)") << "\n:";
 		return;
 		break;
 	case work::WORK:
-		std::cout << "Work not stoped, u can use stop (e)\n:";
+		std::cout << obj_loc->find_loc("Work not stoped, u can use stop (e)") << "\n:";
 		return;
 		break;
 	case work::PAUSE:
-		std::cout << "Work on pause, u can use unpause (u) and stop (e)\n:";
+		std::cout << obj_loc->find_loc("Work on pause, u can use unpause (u) and stop (e)") << "\n:";
 		return;
 		break;
 	case work::COMMIT:
 		//std::cout << "U write this commit:" << str < "\n:";
-		std::cout << "Commit write\n";
-		file << "\nWhat do: " << str << "\n" << "Work stoped: " << ctime(&end_work) << "" << SEPARATOR;
+		std::cout << obj_loc->find_loc("Commit write") << "\n";
+		file << "\n" << obj_loc->find_loc("What do:") << str << "\n" << obj_loc->find_loc("Work stoped:") << ctime(&end_work) << "" << SEPARATOR;
 		status = IDLE;
 		reopen();
 		return;
@@ -177,7 +183,7 @@ bool work::wait_commit()
 
 bool work::close()
 {
-	const std::string ByeBye = "ByeBye\n";
+	const std::string ByeBye = obj_loc->find_loc("ByeBye") + "\n";
 	std::string cache = "";
 	std::string cache_2 = "";
 
@@ -199,7 +205,7 @@ bool work::close()
 		else return false;
 		break;
 	case work::PAUSE:
-		std::cout << " Work on pause. Commit and exit or just exit? (c/e)\n";
+		std::cout << obj_loc->find_loc("Work on pause. Commit and exit or just exit? (c/e)") << "\n";
 		std::cin >> cache;
 		if (cache == "c") {
 			unpause();
@@ -234,6 +240,8 @@ bool work::close()
 
 bool work::reopen()
 {
+	file.flush();
+	/*
 	file.close();
 	file.open(name_file, std::fstream::app | std::fstream::out);
 	if (file.rdstate() && std::fstream::failbit != 0) {
@@ -244,6 +252,11 @@ bool work::reopen()
 	else
 	{
 		return true;
-	}
+	}*/
 }
 
+bool work::is_error(){
+	if (error != OK){
+		return true;
+	} else return false;
+}

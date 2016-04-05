@@ -6,11 +6,15 @@
 #include "Source/apps_string.h"
 #include "Source/work.h"
 #include "Source/localizate.h"
+#include "Source/Errors_codes.h"
 
 int main(int argc, char* argv[]) {
 
 	char* local = setlocale(LC_ALL, "");
 	localizate loc = localizate(local);
+	if (loc.is_error()){
+		return 1;
+	}
 
 	Argv_Parser args = Argv_Parser(argc, argv);
 	std::string name_file;
@@ -34,7 +38,10 @@ int main(int argc, char* argv[]) {
 		name_file = args.name_file;
 	}
 
-	work job = work(name_file);
+	work job = work(name_file, &loc);
+	if (job.is_error()){
+		return 2;
+	}
 
 	bool global_work = true;
 	while (global_work) {

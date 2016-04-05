@@ -1,3 +1,27 @@
-"un_US":{
-	
+{
+	"un_US":{
+		"Failed to create or open file:": "Failed to create or open file:",
+		"File open normal:": "File open normal:",
+		"Work started:": "Work started:",
+		"Work already start, u can use stop (e)": "Work already start, u can use stop (e)",
+		"Work on pause, u can use unpause (u)": "Work on pause, u can use unpause (u)",
+		"Work not start, u can use start (b)": "Work not start, u can use start (b)",
+		"Work stoped:": "Work stoped:",
+		"Write commit:" : "Write commit:",
+		"Work on pause:": "Work on pause:",
+		"Work already pause, u can use unpause (u)": "Work already pause, u can use unpause (u)",
+		"Work not pause, u can use pause (p)": "Work not pause, u can use pause (p)",
+		"Please write commit without smth command on start string:": "Please write commit without smth command on start string:",
+		"Work unpause on:": "Work unpause on:",
+		"Work not stoped, u can use stop (e)": "Work not stoped, u can use stop (e)",
+		"Work on pause, u can use unpause (u) and stop (e)": "Work on pause, u can use unpause (u) and stop (e)",
+		"Time take:": "Time take:",
+		"days=": "days=", 
+		"hours=": "hours=",
+		"mins=": "mins=",
+		"Commit write": "Commit write",
+		"What do:": "What do:",
+		"ByeBye": "ByeBye",
+		"Work on pause. Commit and exit or just exit? (c/e)": "Work on pause. Commit and exit or just exit? (c/e)"
+	}
 }
