@@ -40,6 +40,8 @@ localizate::localizate(char* lc) {
 		}
 		if (local_json.find(cache) != local_json.end()){
 			now_local = cache;
+			//std::cout<<local_json.find(cache).value();
+			local_json = json::parse(local_json.find(cache).value().dump());
 		}
 	}
 }
