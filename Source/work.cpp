@@ -110,7 +110,7 @@ void work::pause()
 		return;
 		break;
 	case work::PAUSE:
-		std::cout << obj_loc->find_loc("Work already pause, u can use unpause (u)") << "\n:";
+		std::cout << obj_loc->find_loc("Work on pause, u can use unpause (u)") << "\n:";
 		return;
 		break;
 	case work::COMMIT:
