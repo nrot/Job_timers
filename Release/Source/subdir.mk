@@ -8,6 +8,7 @@ CPP_SRCS += \
 ../Source/apps_string.cpp \
 ../Source/apps_times.cpp \
 ../Source/argparser.cpp \
+../Source/localizate.cpp \
 ../Source/work.cpp 
 
 OBJS += \
@@ -15,6 +16,7 @@ OBJS += \
 ./Source/apps_string.o \
 ./Source/apps_times.o \
 ./Source/argparser.o \
+./Source/localizate.o \
 ./Source/work.o 
 
 CPP_DEPS += \
@@ -22,6 +24,7 @@ CPP_DEPS += \
 ./Source/apps_string.d \
 ./Source/apps_times.d \
 ./Source/argparser.d \
+./Source/localizate.d \
 ./Source/work.d 
 
 
