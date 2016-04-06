@@ -16,7 +16,7 @@ public:
 	void commit(std::string str);
 	bool wait_commit();
 	bool close();
-	bool reopen();
+	void reopen();
 	bool is_error();
 private:
 	enum state
