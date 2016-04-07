@@ -52,6 +52,14 @@ std::string localizate::find_loc(std::string f){
 		return f;
 	}
 }
+std::string localizate::separator(){
+	std::string sep = "separator";
+	if (local_json.find(sep) != local_json.end()){
+		return local_json.find(sep).value();
+	} else {
+		return "################################################################";
+	}
+}
 
 bool localizate::is_error(){
 	if (error != OK){

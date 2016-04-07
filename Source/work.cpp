@@ -30,9 +30,10 @@ void work::start()
 {
 	if (status == IDLE) {
 		start_work = time(NULL);
+		all_pause = 0;
 		status = WORK;
 		std::cout << obj_loc->find_loc("Work is started:") << ctime(&start_work)<<"\n:";
-		file << SEPARATOR << obj_loc->find_loc("Work is started:") << ctime(&start_work) << "\n";
+		file << obj_loc->separator() << obj_loc->find_loc("Work is started:") << ctime(&start_work) << "\n";
 		reopen();
 		return;
 	} 
@@ -57,8 +58,6 @@ void work::start()
 
 bool work::stop()
 {
-	time_t tt;
-	struct tm * take_time;
 	switch (status)
 	{
 	case work::IDLE:
@@ -66,18 +65,9 @@ bool work::stop()
 		return false;
 		break;
 	case work::WORK:
-		end_work = time(NULL);
-		tt = end_work - start_work - all_pause;
-		take_time = gmtime(&tt);
-		status = COMMIT;
-		std::cout << obj_loc->find_loc("Work is ended:") << ctime(&end_work) << "\n"<< obj_loc->find_loc("Duration:")<<ctime(&tt);
-		file << obj_loc->find_loc("Take time:");
-		if (sec_to_day(tt) > 0) file << obj_loc->find_loc("days=") << sec_to_day(tt) << ";";
-		if (sec_to_fhour(tt) > 0) file << obj_loc->find_loc("hours=") << (floor(sec_to_fhour(tt))*10)/10 << ";";
-		if (sec_to_mins(tt) > 0) file << obj_loc->find_loc("mins=") << sec_to_mins(tt) << ";";
-		reopen();
 		std::cout << "\n"<< obj_loc->find_loc("Write your comment:")<< "\n";
-		//file << "Work is ended: " << ctime(&end_work) << "\n" << SEPARATOR;
+		status = COMMIT;
+		//file << "Work is ended: " << ctime(&end_work) << "\n" << obj_loc->separator();
 		return true;
 		break;
 	case work::PAUSE:
@@ -148,6 +138,8 @@ void work::unpause()
 
 void work::commit(std::string str)
 {
+	time_t tt;
+	struct tm * take_time;
 	switch (status)
 	{
 	case work::IDLE:
@@ -164,8 +156,19 @@ void work::commit(std::string str)
 		break;
 	case work::COMMIT:
 		//std::cout << "U write this commit:" << str < "\n:";
+		file << "\n" << obj_loc->find_loc("Comment:") << str << "\n";
 		std::cout << obj_loc->find_loc("The comment is saved") << "\n";
-		file << "\n" << obj_loc->find_loc("Comment:") << str << "\n" << obj_loc->find_loc("Work is ended:") << ctime(&end_work) << "" << SEPARATOR;
+		end_work = time(NULL);
+		tt = end_work - start_work - all_pause;
+		take_time = gmtime(&tt);
+		std::cout << obj_loc->find_loc("Work is ended:") << ctime(&end_work) << "\n"<< obj_loc->find_loc("Duration:")<<ctime(&tt);
+		file << obj_loc->find_loc("Work is ended:") << ctime(&end_work) << "\n";
+		file << obj_loc->find_loc("Take time:");
+		if (sec_to_day(tt) > 0) file << obj_loc->find_loc("days=") << sec_to_day(tt) << ";";
+		if (sec_to_fhour(tt) > 0) file << obj_loc->find_loc("hours=") << (floor(sec_to_fhour(tt))*10)/10 << ";";
+		if (sec_to_mins(tt) > 0) file << obj_loc->find_loc("mins=") << sec_to_mins(tt) << ";";
+		file << "\n" <<obj_loc->separator() << "\n";
+		reopen();
 		status = IDLE;
 		reopen();
 		return;
@@ -182,7 +185,7 @@ bool work::wait_commit()
 bool work::close()
 {
 	const std::string ByeBye = obj_loc->find_loc("ByeBye") + "\n";
-	std::string cache = "";
+	std::string cache;
 	std::string cache_2 = "";
 
 	switch (status)
@@ -194,7 +197,7 @@ bool work::close()
 		break;
 	case work::WORK:
 		if (stop()) {
-			std::cin >> cache;
+			std::getline(std::cin, cache);
 			commit(cache);
 			std::cout << ByeBye;
 			file.close();
@@ -239,18 +242,6 @@ bool work::close()
 void work::reopen()
 {
 	file.flush();
-	/*
-	file.close();
-	file.open(name_file, std::fstream::app | std::fstream::out);
-	if (file.rdstate() && std::fstream::failbit != 0) {
-		std::cout << "Failed to create or open file: " << name_file;
-		error = FILENOTOPEN;
-		return false;
-	}
-	else
-	{
-		return true;
-	}*/
 }
 
 bool work::is_error(){

@@ -34,6 +34,6 @@ private:
 	time_t all_pause = 0;
 	std::string descript_work, name_file;
 	ERRORS_CODES error = OK;
-	const std::string SEPARATOR = "###########################################\n";
+	//const std::string SEPARATOR = "###########################################\n";
 };
 

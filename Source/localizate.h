@@ -19,6 +19,7 @@ class localizate {
 public:
 	localizate(char* lc);
 	std::string find_loc(std::string f);
+	std::string separator();
 	bool is_error();
 private:
 	std::string now_local = "en_US";

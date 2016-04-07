@@ -15,14 +15,18 @@
 		"Work is unpaused:": "Work is unpaused:",
 		"Work is not ended, u can use end (e)": "Work is not ended, u can use end (e)",
 		"Duration:": "Duration:",
+		
 		"days=": "days=", 
 		"hours=": "hours=",
 		"mins=": "mins=",
+		
 		"The comment is saved": "The comment is saved",
 		"Comment:": "Comment:",
 		"ByeBye": "ByeBye",
-		"Work is paused. Comment and exit or just exit? (c/e)": "Work is paused. Comment and exit or just exit? (c/e)"
-	},
+		"Work is paused. Comment and exit or just exit? (c/e)": "Work is paused. Comment and exit or just exit? (c/e)",
+		
+		"separator": "################################################################"
+ 	},
 	"ru_RU":{
 		"Couldnt create or open file:": "Невозможно создать или открыть файл:",
 		"File is opened ok:": "Файл открыт нормально:",
@@ -47,6 +51,8 @@
 		"The comment is saved": "Комментарий сохранен",
 		"Comment:": "Комментарий:",
 		"ByeBye": "Bye",
-		"Work is paused. Comment and exit or just exit? (c/e)": "Работа приостановлена. Написать комментарий и выйти или просто выйти? (c/e)"
+		"Work is paused. Comment and exit or just exit? (c/e)": "Работа приостановлена. Написать комментарий и выйти или просто выйти? (c/e)",
+		
+		"separator": "################################################################"
 	}
 } 
